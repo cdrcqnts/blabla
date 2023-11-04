@@ -7,7 +7,7 @@ jobs:
     env:
       PORT: 8080
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
@@ -27,7 +27,9 @@ jobs:
       - name: Run pytest
         run: cd backend && pytest
       - name: Print Env Variables
-        run: echo "${{env.PORT}}"
+        run: |
+          echo "${{env.PORT}}"
+          echo "${{secrets.SECRET_VAR}}"
   # deploy:
   #   needs: test
   #   runs-on: ubuntu-latest
