@@ -1,7 +1,7 @@
 name: Deployment
 on: [push, workflow_dispatch]
 jobs:
-  flake8-lint:
+  lint:
     runs-on: ubuntu-latest
     name: Lint
     steps:
@@ -17,6 +17,7 @@ jobs:
           path: "./backend/app/"
           plugins: "flake8-bugbear==22.1.11 flake8-black"
   test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out source repository

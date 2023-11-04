@@ -11,7 +11,12 @@ def test_root():
 
 
 def test_read_item():
-    response = client.get("/items/foo", headers={"X-Token": "coneofsilence"})
+    response = client.get(
+        "/items/foo",
+        headers={
+            "X-Token": "coneofsilence",
+        },
+    )
     assert response.status_code == 200
     assert response.json() == {
         "id": "foo",
@@ -21,22 +26,40 @@ def test_read_item():
 
 
 def test_read_item_bad_token():
-    response = client.get("/items/foo", headers={"X-Token": "hailhydra"})
+    response = client.get(
+        "/items/foo",
+        headers={
+            "X-Token": "hailhydra",
+        },
+    )
     assert response.status_code == 400
-    assert response.json() == {"detail": "Invalid X-Token header"}
+    assert response.json() == {
+        "detail": "Invalid X-Token header",
+    }
 
 
 def test_read_inexistent_item():
-    response = client.get("/items/baz", headers={"X-Token": "coneofsilence"})
+    response = client.get(
+        "/items/baz",
+        headers={
+            "X-Token": "coneofsilence",
+        },
+    )
     assert response.status_code == 404
-    assert response.json() == {"detail": "Item not found"}
+    assert response.json() == {
+        "detail": "Item not found",
+    }
 
 
 def test_create_item():
     response = client.post(
         "/items/",
         headers={"X-Token": "coneofsilence"},
-        json={"id": "foobar", "title": "Foo Bar", "description": "The Foo Barters"},
+        json={
+            "id": "foobar",
+            "title": "Foo Bar",
+            "description": "The Foo Barters",
+        },
     )
     assert response.status_code == 200
     assert response.json() == {
@@ -50,16 +73,24 @@ def test_create_item_bad_token():
     response = client.post(
         "/items/",
         headers={"X-Token": "hailhydra"},
-        json={"id": "bazz", "title": "Bazz", "description": "Drop the bazz"},
+        json={
+            "id": "bazz",
+            "title": "Bazz",
+            "description": "Drop the bazz",
+        },
     )
     assert response.status_code == 400
-    assert response.json() == {"detail": "Invalid X-Token header"}
+    assert response.json() == {
+        "detail": "Invalid X-Token header",
+    }
 
 
 def test_create_existing_item():
     response = client.post(
         "/items/",
-        headers={"X-Token": "coneofsilence"},
+        headers={
+            "X-Token": "coneofsilence",
+        },
         json={
             "id": "foo",
             "title": "The Foo ID Stealers",
@@ -67,4 +98,6 @@ def test_create_existing_item():
         },
     )
     assert response.status_code == 400
-    assert response.json() == {"detail": "Item already exists"}
+    assert response.json() == {
+        "detail": "Item already exists",
+    }
