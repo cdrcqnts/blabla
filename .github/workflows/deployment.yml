@@ -4,7 +4,10 @@ jobs:
   test:
     # needs: lint
     name: Test
+    env:
+      PORT: 8080
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
@@ -23,6 +26,8 @@ jobs:
           src: "./backend/app/"
       - name: Run pytest
         run: cd backend && pytest
+      - name: Print Env Variables
+        run: echo "${{env.PORT}}"
   # deploy:
   #   needs: test
   #   runs-on: ubuntu-latest
